@@ -1,0 +1,59 @@
+// Type your code here, or load an example.
+#include <iostream>
+#include <map>
+using namespace std;
+class Vector{
+    int size=0;int *arrays = nullptr;int index=-1;
+public:
+    Vector(){this->size = 10000000; arrays=new int[this->size];}
+    Vector(int size){this->size = size;arrays = new int[size];}
+    int operator[](int index){return this->arrays[index];}
+    int at(int index){return this->arrays[index];}
+    int back(){return this->arrays[this->index];}
+    int begin(){return this->arrays[0];}
+    int *data(){return &this->arrays[0];}
+    int getsize(){return index;}
+    int emplace(int position, int value){this->arrays[position] = value;}
+    void erase(int position){
+        int *temp = new int[size];
+        for(int i=0,j=0;i<index && j<=index;i++,j++){
+            if(i==position){
+                temp[i] = this->arrays[i+1];//i=2  4
+                index--;
+                j++;
+                continue;
+            }
+            temp[i] = this->arrays[j];//1 2 4 4   
+        }
+        for(int i=0;i<index;i++){
+            this->arrays[i] = temp[i];
+        }
+    }
+    void erase(int first, int last){
+        int *temp = new int[size];int limit = last-first;
+        for(int i=0,j=0;i<index && j<=index;i++,j++){
+            if(i>=first && i<= last){
+                temp[i] = this->arrays[i+limit];//i=2  4
+                //index--;
+                j++;
+                continue;
+            }
+            temp[i] = this->arrays[j];//1 2 4 4   
+        }
+        for(int i=0;i<index;i++){
+            this->arrays[i] = temp[i];
+        }
+        index-=limit;
+    }
+    bool empty(){return this->size == 0 ? true : false;}
+    void clear(){for(int i=0;i<size;i++){this->arrays[i] = 0;}}
+    void push_back(int num){this->index++;this->arrays[index] = num;}
+    
+};
+int main(){
+    
+    return 0;
+}
+
+
+
